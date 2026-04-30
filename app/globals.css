@@ -215,3 +215,43 @@ body {
 .header .btn {
   flex-shrink: 0;
 }
+/* === POJOK 3D FINAL GOLD THEME OVERRIDE === */
+
+.btn {
+  color: #1a1205 !important;
+  background: linear-gradient(135deg, #f59e0b, #facc15) !important;
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.28) !important;
+}
+
+.btnFull {
+  color: #1a1205 !important;
+  background: linear-gradient(135deg, #f59e0b, #facc15) !important;
+  box-shadow: 0 14px 38px rgba(250, 204, 21, 0.28) !important;
+}
+
+.btnDark {
+  color: #fff2bd !important;
+  background: #141008 !important;
+  border: 1px solid rgba(250, 204, 21, 0.35) !important;
+  box-shadow: none !important;
+}
+
+.footer {
+  color: #facc15 !important;
+  text-shadow: 0 0 18px rgba(250, 204, 21, 0.35) !important;
+}
+
+.progressBar {
+  background: linear-gradient(135deg, #f59e0b, #facc15) !important;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #facc15 !important;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.18) !important;
+}
+
+a {
+  color: inherit !important;
+}
