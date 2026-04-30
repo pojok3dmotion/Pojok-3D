@@ -173,3 +173,45 @@ body {
   width: 100%;
   max-width: 520px;
     }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.logoBox {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+}
+
+.logoBox img,
+.logo {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  max-width: 58px !important;
+  max-height: 58px !important;
+  border-radius: 18px;
+  object-fit: cover;
+  display: block;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #c9b88a;
+}
+
+.header .btn {
+  flex-shrink: 0;
+}
