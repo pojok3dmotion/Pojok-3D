@@ -7,7 +7,8 @@ const BACKEND_GENERATE_URL = "https://pojok-3d-backend.vercel.app/api/generate";
 const BACKEND_STATUS_URL = "https://pojok-3d-backend.vercel.app/api/status";
 
 const SUPABASE_URL = "https://hxjdkhmyrozpwiisbzta.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amRraG15cm96cHdpaXNienRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA2MTMsImV4cCI6MjA5MzEyNjYxM30.RhyzDgT9g1k4FV-ZqVGZQ2GF6pyfBIYMj23ea_FCLok";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amRraG15cm96cHdpaXNienRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA2MTMsImV4cCI6MjA5MzEyNjYxM30.RhyzDgT9g1k4FV-ZqVGZQ2GF6pyfBIYMj23ea_FCLok";
 const BUCKET_NAME = "pojok-3d-uploads";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -105,7 +106,9 @@ export default function Page() {
     if (!file) return null;
 
     const ext = file.name.split(".").pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const fileName = `${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2)}.${ext}`;
     const filePath = `uploads/${fileName}`;
 
     const { error: uploadError } = await supabase.storage
@@ -427,37 +430,4 @@ export default function Page() {
             <label className="label">API Key</label>
 
             <div className="row">
-              <input
-                className="input"
-                type={showKey ? "text" : "password"}
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="Masukkan API Key"
-              />
-
-              <button
-                className="btn btnDark"
-                onClick={() => setShowKey(!showKey)}
-              >
-                {showKey ? "Hide" : "Show"}
-              </button>
-            </div>
-
-            <div className="row" style={{ marginTop: 16 }}>
-              <button className="btn" onClick={saveSettings}>
-                Simpan
-              </button>
-
-              <button
-                className="btn btnDark"
-                onClick={() => setShowSettings(false)}
-              >
-                Tutup
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+              <
