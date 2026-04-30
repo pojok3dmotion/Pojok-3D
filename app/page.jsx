@@ -9,6 +9,7 @@ const BACKEND_STATUS_URL = "https://pojok-3d-backend.vercel.app/api/status";
 const SUPABASE_URL = "https://hxjdkhmyrozpwiisbzta.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amRraG15cm96cHdpaXNienRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA2MTMsImV4cCI6MjA5MzEyNjYxM30.RhyzDgT9g1k4FV-ZqVGZQ2GF6pyfBIYMj23ea_FCLok";
+
 const BUCKET_NAME = "pojok-3d-uploads";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -134,98 +135,81 @@ export default function Page() {
       setProcessText("AI sedang memproses cloning joget...");
 
       const response = await fetch(BACKEND_STATUS_URL, {
-        method: "POST",alue={duration}
-            onChange={(e) => setDuration(Number(e.target.value))}
-          >
-            {DURATION_OPTIONS.map((d) => (
-              <option key={d} value={d}>
-                {d} detik
-              </option>
-            ))}
-          </select>
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          apiKey,
+          taskId,
+          modelId
+        })
+      });
 
-          <label className="label">Aspect Ratio</label>
-          <select
-            className="select"
-            value={aspectRatio}
-            onChange={(e) => setAspectRatio(e.target.value)}
-          >
-            <option value="9:16">9:16 Reels/TikTok</option>
-            <option value="16:9">16:9 YouTube</option>
-            <option value="1:1">1:1 Square</option>
-          </select>
+      const data = await response.json();
 
-          <label className="label">Prompt Optional</label>
-          <textarea
-            className="textarea"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          />
-        </div>
+      if (!response.ok) {
+        throw new Error(data?.error || "Gagal mengecek status video.");
+      }
 
-        {loading && (
-          <div className="card">
-            <h2>Memproses Video</h2>
-            <p className="help">
-              {processText || "Mohon tunggu, AI sedang memproses video."}
-            </p>
+      const foundVideoUrl = getVideoUrl(data);
+      const status =
+        data?.status ||
+        data?.data?.status ||
+        data?.raw?.data?.status ||
+        data?.raw?.status;
 
-            <div className="progressWrap">
-              <div className="progressBar" style={{ width: `${progress}%` }} />
-            </div>
-          </div>
-        )}
+      if (foundVideoUrl) {
+        setProgress(100);
+        setProcessText("Video cloning selesai.");
+        setFinalVideoUrl(foundVideoUrl);
+        return;
+      }
 
-        {error && <div className="error">{error}</div>}
+      if (isFailed(status) || data?.failed) {
+        throw new Error("Video gagal diproses. Coba video lebih pendek.");
+      }
+    }
 
-        {finalVideoUrl && (
-          <div className="card">
-            <h2>Video Selesai</h2>
-            <p className="success">Video cloning joget siap diunduh.</p>
+    throw new Error("Proses terlalu lama. Coba video referensi lebih pendek.");
+  }
 
-            <video className="preview" src={finalVideoUrl} controls />
+  async function handleGenerate() {
+    setError("");
+    setFinalVideoUrl("");
+    setLoading(true);
+    setProgress(5);
 
-            <div className="row" style={{ marginTop: 14 }}>
-              <a
-                className="btn"
-                href={finalVideoUrl}
-                download
-                target="_blank"
-                rel="noreferrer"
-              >
-                Download Video
-              </a>
+    try {
+      if (!apiKey.trim()) {
+        throw new Error("Masukkan API Key dulu di Setting.");
+      }
 
-              <a
-                className="btn btnDark"
-                href={finalVideoUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open Video
-              </a>
-            </div>
-          </div>
-        )}
+      if (!videoFile) {
+        throw new Error("Upload video referensi joget dulu.");
+      }
 
-        <button
-          className="btn btnFull"
-          disabled={loading}
-          onClick={handleGenerate}
-        >
-          {loading ? "Sedang Memproses..." : "Generate Video"}
-        </button>
+      if (!imageFile) {
+        throw new Error("Upload foto model dulu.");
+      }
 
-        <p className="footer">Powered by POJOK 3D</p>
-      </main>
+      setProcessText("Mengupload video referensi joget...");
+      setProgress(15);
+      const uploadedVideoUrl = await uploadToStorage(videoFile);
 
-      {showSettings && (
-        <div className="modalBackdrop">
-          <div className="modal">
-            <h2>API Settings</h2>
-            <p className="help">Masukkan API Key provider video AI kamu.</p>
+      setProcessText("Mengupload foto model...");
+      setProgress(35);
+      const uploadedImageUrl = await uploadToStorage(imageFile);
 
-            <label className="label">API Key</label>
+      setProcessText("Mengirim request cloning ke AI...");
+      setProgress(55);
 
-            <div className="row">
-              <
+      const response = await fetch(BACKEND_GENERATE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          apiKey,
+          modelId,
+          duration
