@@ -6,7 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 const BACKEND_GENERATE_URL = "https://pojok-3d-backend.vercel.app/api/generate";
 const BACKEND_STATUS_URL = "https://pojok-3d-backend.vercel.app/api/status";
 
-const SUPABASE_URL = "https://hxjdkhmyrozpwiisbzta.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://hxjdkhmyrozpwiisbzta.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amRraG15cm96cHdpaXNienRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA2MTMsImV4cCI6MjA5MzEyNjYxM30.RhyzDgT9g1k4FV-ZqVGZQ2GF6pyfBIYMj23ea_FCLok";
 const BUCKET_NAME = "pojok-3d-uploads";
 
@@ -252,7 +252,12 @@ export default function Page() {
     <div className="container">
       <header className="header">
         <div className="logoBox">
-          <div className="logoText">3D</div>
+          <img
+            className="logo"
+            src="https://i.ibb.co.com/FkhrbdCG/affe7a4e-5af8-4d98-ae78-d94fe3281511.jpg"
+            alt="POJOK 3D"
+          />
+
           <div>
             <div className="title">POJOK 3D</div>
             <div className="subtitle">Video Cloning Joget</div>
@@ -455,4 +460,4 @@ export default function Page() {
       )}
     </div>
   );
-    }
+}
