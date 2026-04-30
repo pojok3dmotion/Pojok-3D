@@ -6,8 +6,8 @@ import { createClient } from "@supabase/supabase-js";
 const BACKEND_GENERATE_URL = "https://pojok-3d-backend.vercel.app/api/generate";
 const BACKEND_STATUS_URL = "https://pojok-3d-backend.vercel.app/api/status";
 
-const SUPABASE_URL = "ISI_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "ISI_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://hxjdkhmyrozpwiisbzta.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amRraG15cm96cHdpaXNienRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA2MTMsImV4cCI6MjA5MzEyNjYxM30.RhyzDgT9g1k4FV-ZqVGZQ2GF6pyfBIYMj23ea_FCLok";
 const BUCKET_NAME = "pojok-3d-uploads";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
