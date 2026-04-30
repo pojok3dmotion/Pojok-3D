@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "POJOK 3D",
-  description: "Video Cloning Joget"
+  description: "Clone Dance Video"
 };
 
 export default function RootLayout({ children }) {
